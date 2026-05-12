@@ -1,6 +1,6 @@
 ![Castor and Pollux Matrix](https://github.com/00face/Castor-and-Pollux/blob/8de57d055a708df5814784e8bc181ac4e372d95e/castor_pollux_logo.svg)
 
-TL;DR: Castor is a robust, client-side extraction matrix designed to systematically scrape, secure, and structure raw digital conversations into a local data vault, while Pollux is its twin component functioning as an exported, offline HTML5 explorer to search, visualize, and filter those harvested archives.
+TL;DR: In short, you can download and archive your Gemini history and export it as markdown, text, JSON/or/JSONL. Additionally you can process said records and export it for a data set use. The main Castor portion is a robust, client-side extraction matrix designed to systematically scrape, secure, and structure raw digital conversations into a local data vault, while Pollux is its twin component functioning as an exported, offline HTML5 explorer to search, visualize, and filter those harvested archives.(ty ♦ScottRim♦)
 
 
 Caption: The Castor matrix panel running directly in the browser, showing extraction telemetry and active queues.

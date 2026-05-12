@@ -69,14 +69,30 @@ Caption: Castor's SFT pipeline purifying raw chat logs into training-ready datas
 
 4. Export your data using the OBSIDIAN button for a markdown vault, or click GEN HTML to create your personal Pollux viewer.
 
-### What's Next
+## What's Next
 
-- Implement chunked downloading for massive vaults (10,000+ records) to prevent memory allocation crashes during zip generation.
+Planned Update Log: These listed are all basically for the goal of minimizing exposure in memory and the DOM, and enforcing strict lifecycle management aligned with user activity, rather than just leaving the door open all day.
 
-- Add multi-modal vision parsing to the SFT pipeline to transcribe diagrams/images scraped during the Castor run.
+### API Key Exposure Hardening
 
-- Expand the Pollux viewer to support full-text regex search.
+[ ] Transition from URL Parameter to HTTP Header: The API key will no longer be passed via URL parameters. Instead, it will be securely transmitted using the x-goog-api-key HTTP header within the safeApiFetch configuration to mitigate risks from proxy logs, browser tools, and DNS monitoring.
 
-- Add a few more focuses for SFT processing.
+[ ] DOM Sanitization: After the API key is captured into internal state, the value in the input field (<input id="gae-api-key">) will be immediately overwritten with masked characters to eliminate exposure to malicious scripts or browser extensions.
 
-- SYS.SEC: AES-GCM | SYS.STO: IDB V2
+[ ] Memory Obfuscation: The API key will be stored in a scoped variable within the Immediately Invoked Function Expression (IIFE), rather than in the global state object, preventing access from the global window context.
+
+
+### Browser Storage and Lifecycle Management
+
+[ ] Removal of sessionStorage Usage: To eliminate persistent security vulnerabilities and reduce exposure to cross-site scripting (XSS) threats, the script will discontinue storing the API key in sessionStorage.
+
+[ ] Ephemeral Memory Storage: Users will be required to input the API key at each script injection. The key will reside only in ephemeral closure memory, ensuring it is cleared upon page refresh or tab closure.
+
+
+Inactivity-Based Zeroization (Time-to-Live)
+
+[ ] Implementation of a Rolling Inactivity Timeout: The API key will be automatically cleared from memory after 15 minutes of inactivity (no API calls). Each successful API request will reset this timer.
+
+[ ] User Re-Authentication Prompt: Upon zeroization, users will be prompted to re-enter their API key to continue operations.
+
+[ ] Consideration for Long-Running Processes: This approach balances security with functionality by avoiding premature key deletion during extended batch operations, preventing unauthorized access errors mid-process.

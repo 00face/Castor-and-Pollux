@@ -97,5 +97,5 @@ Inactivity-Based Zeroization (Time-to-Live)
 
 ## (Hardened against CWE-522)
 
--   **Zero-Knowledge Vault Encryption:** Your local IndexedDB storage is encrypted using AES-GCM. The encryption key is dynamically derived using PBKDF2 from a **Vault Password** you provide upon injection. The key is marked `extractable: false`. **If you lose your password, your local database is permanently cryptographically shredded. There is no recovery.**
+**Zero-Knowledge Vault Encryption:** Your local IndexedDB storage is encrypted using AES-GCM. The encryption key is dynamically derived using PBKDF2 from a **Vault Password** you provide upon injection. The key is marked `extractable: false`. **If you lose your password, your local database is permanently cryptographically shredded. There is no recovery.**
 

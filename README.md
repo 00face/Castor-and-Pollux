@@ -2,9 +2,6 @@
 
 TL;DR: In short, you can download and archive your Gemini history and export it as markdown, text, JSON/or/JSONL. Additionally you can process said records and export it for a data set use. The main Castor portion is a robust, client-side extraction matrix designed to systematically scrape, secure, and structure raw digital conversations into a local data vault, while Pollux is its twin component functioning as an exported, offline HTML5 explorer to search, visualize, and filter those harvested archives.(ty ♦ScottRim♦)
 
-
-Caption: The Castor matrix panel running directly in the browser, showing extraction telemetry and active queues.
-
 ## What is this?
 
 If you use AI chat interfaces heavily, you generate a massive amount of valuable data—code snippets, worldbuilding lore, research, and project planning. Relying on the platform's default history tab makes this data hard to search, impossible to query offline, and difficult to format for other uses (like fine-tuning your own models).
@@ -15,12 +12,9 @@ Castor: A script you run in your browser that automatically scrolls through your
 
 Pollux: A single, standalone web page that Castor generates for you. You can open it entirely offline to search, read, and filter everything Castor saved.
 
-
-Caption: The Pollux offline viewer displaying archived conversations with active taxonomy filters.
-
 ## 🦫 Castor Features (The Extractor)
 
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/562ad928-40e9-4a21-b354-778c2640856f" />
+<img width="1366" height="768" alt="The Castor matrix panel running directly in the browser, showing extraction telemetry and active queues." src="https://github.com/user-attachments/assets/562ad928-40e9-4a21-b354-778c2640856f" />
 
 Castor operates directly inside the browser environment where your data lives.
 
@@ -40,7 +34,7 @@ Telemetry & Diagnostics: Features a Picture-in-Picture (PiP) mode to monitor ext
 
 ## ✨ Pollux Features (The Explorer)
 
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/6c69f220-d59a-4ce8-b835-ce47b19674b1" />
+<img width="1366" height="768" alt="The Pollux offline viewer displaying archived conversations with active taxonomy filters." src="https://github.com/user-attachments/assets/6c69f220-d59a-4ce8-b835-ce47b19674b1" />
 
 Pollux is the reader. It is a zero-dependency HTML file, meaning you don't need a web server, Node.js, or an internet connection to run it. Just double-click the file.
 

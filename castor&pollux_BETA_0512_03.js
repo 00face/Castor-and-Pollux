@@ -1,3 +1,17 @@
+// ==UserScript==
+// @name         Castor & Pollux
+// @namespace    https://github.com/00face/Castor-and-Pollux
+// @version      0.5.12-beta.3
+// @description  Automated AI chat history extractor, local encrypted vault, and SFT dataset builder
+// @author       00face
+// @match        https://gemini.google.com/*
+// @match        https://aistudio.google.com/*
+// @match        https://chatgpt.com/*
+// @match        https://claude.ai/*
+// @grant        none
+// @run-at       document-idle
+// ==/UserScript==
+
 // castor.js w/comments
 // Latest Additions: Baseline Chassis, Hardened Phase-0 Quota Intercept, Strict-Left Tour Guide, API Sourcing Integrations.
 // Upgrades: Chunked Zip Exports, Multi-modal Vision API, Regex Search in Pollux, Expanded SFT Taxonomies.
@@ -5,6 +19,27 @@
 
 (function () {
     'use strict';
+
+    /* ─────────────────────────────────────────────
+       USER CONFIG — tweak these before injecting
+    ──────────────────────────────────────────── */
+    const USER_CONFIG = {
+        // AI provider
+        defaultAgent:      'Gemini',           // 'Gemini' | 'Ollama'
+        defaultModel:      'gemini-2.5-flash', // model ID passed to the API
+
+        // UI defaults (overridden by localStorage after first run)
+        defaultFocus:      'auto',   // 'auto'|'code'|'security'|'math'|'data_sci'|'projects'|'media'|'dialogue'|'knowledge'|'research'
+        defaultTheme:      0,        // 0–13 index into the themes array (0 = Terminal Teriyaki)
+        defaultPos:        'right',  // panel anchor: 'right' | 'left'
+        audioEnabled:      false,    // start with background audio on
+
+        // Performance & quota
+        workers:           5,                 // concurrent scrape workers
+        dailyRequestLimit: 1500,              // Gemini free-tier RPD hard cap
+        apiKeyTtlMs:       15 * 60 * 1000,   // inactivity window before API key is zeroized (ms)
+    };
+    /* ────────────────────────────────────────────── */
 
     // ─── PHASE-0: HARDENED STORAGE INTERCEPT ─────────────────────────────────────
     const _BLOCKED = new Set(['console-history', 'con-tline']);
@@ -140,7 +175,7 @@
 
     let _ephemeralApiKey = null;
     let _apiTtlTimer = null;
-    const API_TTL_MS = 15 * 60 * 1000; // 15 minutes rolling inactivity window
+    const API_TTL_MS = USER_CONFIG.apiKeyTtlMs;
 
     const resetApiTtl = () => {
         if (_apiTtlTimer) clearTimeout(_apiTtlTimer);
@@ -190,18 +225,18 @@
             { id: "generated_content", name: "Focus: Gen Content" }
         ],
         excl: [/android/i, /location history/i, /youtube music/i],
-        limits: { RPD: 1500 }
+        limits: { RPD: USER_CONFIG.dailyRequestLimit }
     };
 
     const S = {
         run: false, key: null, idb: null, cull: 0, saved: 0, log: [], nodes: {},
-        queue: [], active: 0, workers: 5, seen: new WeakSet(), queueHalted: false,
+        queue: [], active: 0, workers: USER_CONFIG.workers, seen: new WeakSet(), queueHalted: false,
         aiDataset: [], metro: null, pipWindow: null, knownHashes: new Set(),
-        agent: storage.get('gae_agent', 'Gemini'),
-        model: storage.get('gae_model', 'gemini-2.5-flash'),
-        focus: storage.get('gae_focus', 'auto'),
-        uiTheme: parseInt(storage.get('gae_uitheme', 0)), pos: storage.get('gae_pos', 'right'), min: false,
-        audioInit: false, audioCtx: null, scriptNode: null, audioTime: 0, audioToggled: storage.get('gae_audio', false),
+        agent: storage.get('gae_agent', USER_CONFIG.defaultAgent),
+        model: storage.get('gae_model', USER_CONFIG.defaultModel),
+        focus: storage.get('gae_focus', USER_CONFIG.defaultFocus),
+        uiTheme: parseInt(storage.get('gae_uitheme', USER_CONFIG.defaultTheme)), pos: storage.get('gae_pos', USER_CONFIG.defaultPos), min: false,
+        audioInit: false, audioCtx: null, scriptNode: null, audioTime: 0, audioToggled: storage.get('gae_audio', USER_CONFIG.audioEnabled),
         animPaused: false, fxEnabled: false, sessionConfirmed: false,
         quota: storage.get('gae_quota', { date: new Date().toDateString(), reqs: 0, toks: 0 })
     };
